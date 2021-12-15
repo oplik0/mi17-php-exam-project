@@ -1,0 +1,8 @@
+.classCard {
+    display: flex;
+    direction: column;
+}
+.level {
+    display: flex;
+    direction: row;
+}

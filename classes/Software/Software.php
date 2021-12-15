@@ -1,12 +1,18 @@
 <?php
 
+/**
+ * A generic software class
+ * @author @oplik0
+ * @version 0.1
+ * @package php-exam
+ */
 class Software
 {
-    private string $name;
-    private array $versions = array();
-    private string $author;
-    private string $license;
-    private bool $OSIApproved;
+    protected string $name;
+    protected array $versions = array();
+    protected string $author;
+    protected string $license;
+    protected bool $OSIApproved;
     function __construct(string $name, string|array $versions, string $author, string $license)
     {
         $this->setName($name);
