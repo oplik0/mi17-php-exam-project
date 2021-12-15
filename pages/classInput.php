@@ -1,6 +1,6 @@
 <?php
 
-preg_match('{/class/([a-z])}iu', $_SERVER['REQUEST_URI'], $matches);
+preg_match('{/class/([a-z]+)}iu', $_SERVER['REQUEST_URI'], $matches);
 $className = $matches[1];
 
 
@@ -24,13 +24,16 @@ function createInputs(ReflectionClass $classReflection): void
                 $input = "<input type=\"text\" id=\"$propertyName\" name=\"$propertyName\" placeholder=\"$propertyName\">";
                 break;
             default:
-                $typeClass = @new ReflectionClass($propertyType);
-                if ($typeClass->isSubclassOf('Software')) {
-                    createInputs($typeClass);
-                    continue;
-                } else {
-                    $input = "<input type=\"text\" id=\"$propertyName\" name=\"$propertyName\" placeholder=\"$propertyName\">";
+                try {
+                    $typeClass = new ReflectionClass((string)$propertyType);
+                    if ($typeClass->isSubclassOf('Software')) {
+                        echo "<label for=\"$propertyType\">$propertyName</label>";
+                        createInputs($typeClass);
+                        continue 2;
+                    }
+                } catch (Exception $e) {
                 }
+                $input = "<input type=\"text\" id=\"$propertyName\" name=\"$propertyName\" placeholder=\"$propertyName\">";
         }
         echo <<<EOD
             <div class="classInput">
@@ -45,7 +48,7 @@ function createInputs(ReflectionClass $classReflection): void
 ?>
 <h1>Create new <?= $className ?></h1>
 <form action="index.php" method="post">
-    <input type="hidden" value="<?= $className ?>">
+    <input type="hidden" name="className" value="<?= $className ?>">
     <?php createInputs($classReflection); ?>
     <input type="submit" value="Create">
 </form>

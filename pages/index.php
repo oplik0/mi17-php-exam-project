@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaliczenie</title>
-</head>
-
-<body>
     <?php
     require_once(__DIR__ . "/../db.php");
     require_once(__DIR__ . '/../classes/ClassDisplay.php');
@@ -30,7 +19,32 @@
         }
     }
     echo $classDisplays[1]->toHTML();
-    ?>
-</body>
 
-</html>
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if (isset($_POST["className"]) && isSupportedClass($_POST["className"])) {
+            function formToClass($className)
+            {
+                $classReflection = new ReflectionClass($className);
+                $classProperties = $classReflection->getConstructor()->getParameters();
+                foreach ($classProperties as $property) {
+                    if (isset($_POST[$property->name])) {
+                        $propertyType = $property->getType();
+                        if (in_array((string)$propertyType, array('int', 'string'))) {
+                            $classProperties[$property->name] = $_POST[$property->name];
+                        } else if (in_array((string)$propertyType, array('string|array', 'array'))) {
+                            $classProperties[$property->name] = explode(', ', $_POST[$property->name]);
+                        } else {
+                            try {
+                                $typeClass = new ReflectionClass((string)$propertyType);
+                                if ($typeClass->isSubclassOf('Software')) {
+                                    $classProperties[$property->name] = formToClass((string)$propertyType);
+                                }
+                            } catch (Exception $e) {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ?>

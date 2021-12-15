@@ -1,5 +1,8 @@
 body {
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .classCard {
     display: flex;
@@ -7,6 +10,7 @@ body {
     width: 100%;
     justify-content: center;
     align-items: center;
+    align-self: flex-start;
 }
 .level1 {
     width: 100vw;
@@ -25,4 +29,22 @@ body {
     max-width: 50vw;
     justify-content: center;
     align-content: center;
+    align-items: center;
+    text-align: center;
+}
+.classCard__info-img {
+    width: 100%;
+    height: auto;
+    min-width: 5vw;
+}
+
+table,
+tr,
+td,
+th {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th {
+    color: #000080;
 }

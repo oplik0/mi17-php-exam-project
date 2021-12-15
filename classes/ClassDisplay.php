@@ -27,13 +27,15 @@ class ClassDisplay
     {
         $nextLevel = $this->level + 1;
         $childrenString = "";
+
         foreach ($this->children as $child) {
             $childrenString .= $child->toHTML();
         }
+
         return <<<EOD
         <div class="classCard">
             <div class="classCard__info">
-                <a href="/classes/$this->name"><img src="$this->imgSrc" alt="$this->title"></a>
+                <a class="classCard__info-link" href="/class/$this->name"><img class="classCard__info-img" src="$this->imgSrc" alt="$this->title"></a>
                 <h4>$this->title</h4>
             </div>
             <div class="classChildren level level$nextLevel">

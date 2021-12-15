@@ -7,9 +7,10 @@ class GameApplication extends Application
 {
     protected string $genre;
     protected GameEngineLibrary $gameEngine;
-    public function __construct()
+    public function __construct(GameEngineLibrary $engine)
     {
         parent::__construct();
         $this->name = 'Game';
+        $this->gameEngine = $engine;
     }
 }

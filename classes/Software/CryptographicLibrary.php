@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/Library.php');
 
-class CryprographicLibrary extends Library
+class CryptographicLibrary extends Library
 {
     protected string $algorithm;
     protected int $minKeyLength;

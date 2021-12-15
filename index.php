@@ -55,7 +55,7 @@ switch ($uri) {
         /**
          * More advanced resolution, then 404 if none are found
          */
-        preg_match('{/class/([a-z])}iu', $uri, $matches);
+        preg_match('{/class/([a-z]+)}iu', $uri, $matches);
         if (isSupportedClass($matches[1])) {
             render_template('classInput', $matches[1]);
         } else {

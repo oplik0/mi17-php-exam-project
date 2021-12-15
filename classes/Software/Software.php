@@ -87,6 +87,46 @@ class Software
     {
         return $this->name . ' ' . $this->getLatestVersion() . ' by ' . $this->author . ' (licensed under ' . $this->license . ')';
     }
+    protected function mapToSQL($value, string $key): string
+    {
+        switch (gettype($value)) {
+            case 'string':
+                return "`$key` varchar(255),";
+            case 'integer':
+                return "`$key` int,";
+            case 'boolean':
+                return "`$key` bit(1),";
+            case 'array':
+                return "`$key` text,";
+            case 'double':
+                return "`$key` double,";
+            default:
+                // default is *some* attempt at foreign key
+                return "`$key` int unsigned,";
+        }
+    }
+    public function createSQLTable(string $tableName, mysqli $connection): mysqli_result|bool
+    {
+        $vars = get_object_vars($this);
+        $variables = implode('\n', array_map($this->mapToSQL, $vars, array_keys($vars)));
+        $sql = "CREATE TABLE IF NOT EXISTS $tableName (
+            `id` int unsigned NOT NULL AUTO_INCREMENT,
+            $variables
+        )";
+        return $connection->query($sql);
+    }
+    public function serializeToSQL(string $tableName, mysqli $connection): mysqli_result|bool
+    {
+        $vars = get_object_vars($this);
+        $variables = implode(', ', array_keys($vars));
+        $values = implode(', ', $vars);
+        $sql = "INSERT INTO $tableName (
+            $variables
+        ) VALUES (
+            $values
+        )";
+        return $connection->query($sql);
+    }
 
     const OSIAPPROVEDLICENSES = array(
         '0BSD',

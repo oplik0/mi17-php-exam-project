@@ -27,8 +27,13 @@ function createTable(array $array): string
 
 function isSupportedClass($classname)
 {
-    $class = @new ReflectionClass($classname);
-    return $class->isSubclassOf('Software');
+    try {
+        $class = new ReflectionClass($classname);
+    } catch (Exception $e) {
+        return false;
+    }
+
+    return $classname === "Software" || $class->isSubclassOf('Software');
 }
 
 function require_software_classess()
