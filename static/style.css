@@ -1,8 +1,28 @@
+body {
+    margin: 0;
+}
 .classCard {
     display: flex;
-    direction: column;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.level1 {
+    width: 100vw;
 }
 .level {
     display: flex;
-    direction: row;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+}
+.classCard__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 10vw;
+    max-width: 50vw;
+    justify-content: center;
+    align-content: center;
 }

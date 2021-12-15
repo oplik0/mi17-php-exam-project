@@ -9,7 +9,7 @@ class ClassDisplay
     private int $level;
     private int $parentId;
     private array $children;
-    public function __construct(int $id, string $name, string $imgSrc, string $title, int $level, int $parentId)
+    public function __construct(int $id, string $name, string $imgSrc, string $title, int $level, int $parentId, array $children = array())
     {
         $this->id = $id;
         $this->name = $name;
@@ -17,10 +17,11 @@ class ClassDisplay
         $this->title = $title;
         $this->level = $level;
         $this->parentId = $parentId;
+        $this->children = $children;
     }
     public function addChild(ClassDisplay $child)
     {
-        $this->children[] = $child;
+        array_push($this->children, $child);
     }
     public function toHTML()
     {
@@ -32,9 +33,8 @@ class ClassDisplay
         return <<<EOD
         <div class="classCard">
             <div class="classCard__info">
-                <img src="$this->imgSrc" alt="$this->title">
-                <h3>$this->title</h3>
-                <p>$this->name</p>
+                <a href="/classes/$this->name"><img src="$this->imgSrc" alt="$this->title"></a>
+                <h4>$this->title</h4>
             </div>
             <div class="classChildren level level$nextLevel">
                 $childrenString

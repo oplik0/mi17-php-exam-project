@@ -21,7 +21,8 @@ function render_template(string $page, string $title, array|string $additionalHe
         '<meta http-equiv="X-UA-Compatible" content="IE=edge">',
         '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
         '<title>' . $title . '</title>',
-        '<meta name="author" content="Jakub Blźniuk">'
+        '<meta name="author" content="Jakub Blźniuk">',
+        '<link rel="stylesheet" href="/static/style.css">'
     ), $additionalHeadElements));
 ?>
 <!DOCTYPE html>

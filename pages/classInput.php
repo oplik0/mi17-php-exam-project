@@ -1,4 +1,5 @@
 <?php
+
 preg_match('{/class/([a-z])}iu', $_SERVER['REQUEST_URI'], $matches);
 $className = $matches[1];
 
