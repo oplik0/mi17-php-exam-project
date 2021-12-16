@@ -36,11 +36,17 @@ class ClassDisplay
         <div class="classCard">
             <div class="classCard__info">
                 <a class="classCard__info-link" href="/class/$this->name"><img class="classCard__info-img" src="$this->imgSrc" alt="$this->title"></a>
-                <h4>$this->title</h4>
+                <h4><a class="classCard__info-link" href="/class/$this->name">$this->title</a></h4>
+                <form class="uploadForm" action='/index.php' method='post' enctype='multipart/form-data'>
+                    <input type='hidden' name='classId' value='$this->id'>
+                    <input type='file' name='classImage'>
+                    <input type='submit' name='imageUpload' value='Upload'>
+                </form>
             </div>
             <div class="classChildren level level$nextLevel">
                 $childrenString
             </div>
+            </form>
         </div>
         EOD;
     }

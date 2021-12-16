@@ -21,7 +21,7 @@ class GameEngineLibrary extends Library
     protected Dimensions $dimensions;
     protected bool $revenueShare;
 
-    public function __construct(string $name, string|array $versions, string $author, string $license, string $language, string $registry, Dimensions $dimensions, bool $revenueShare)
+    public function __construct(string $name = "unknown", string|array $versions = "0.0.0", string $author = "unknown", string $license = "unknown", string $language = "unknown", string $registry = 'http://localhost', string|Dimensions $dimensions = 'SIDE2D', bool $revenueShare = false)
     {
         parent::__construct($name, $versions, $author, $license, $language, $registry);
         $this->setDimensions($dimensions);

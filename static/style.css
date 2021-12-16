@@ -31,6 +31,8 @@ body {
     align-content: center;
     align-items: center;
     text-align: center;
+    margin: 1rem 0.2rem;
+    border: 1px solid #cccccc;
 }
 .classCard__info-img {
     width: 100%;
@@ -47,4 +49,9 @@ th {
 }
 th {
     color: #000080;
+}
+
+.uploadForm {
+    display: flex;
+    flex-direction: column;
 }

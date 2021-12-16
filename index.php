@@ -46,8 +46,8 @@ switch ($uri) {
      * Basic routes
      */
     case '':
-    case 'index.php':
-    case 'index.html':
+    case '/index.php':
+    case '/index.html':
     case '/':
         render_template('index', 'Klasy');
         break;

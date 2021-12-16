@@ -13,7 +13,7 @@ class Software
     protected string $author;
     protected string $license;
     protected bool $OSIApproved;
-    function __construct(string $name, string|array $versions, string $author, string $license)
+    function __construct(string $name = "unknown", string|array $versions = "0.0.0", string $author = "unknown", string $license = "unknown")
     {
         $this->setName($name);
         $this->setVersions($versions);

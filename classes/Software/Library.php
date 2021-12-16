@@ -13,7 +13,7 @@ class Library extends Software
     protected string $language;
     protected string $registry;
     protected bool $isSemVer;
-    public function __construct(string $name, string|array $versions, string $author, string $license, string $language, string $registry)
+    public function __construct(string $name = "unknown", string|array $versions = "0.0.0", string $author = "unknown", string $license = "unknown", string $language = "unknown", string $registry = 'http://localhost')
     {
         parent::__construct($name, $versions, $author, $license);
         $this->language = $language;

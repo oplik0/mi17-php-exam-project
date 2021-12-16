@@ -7,7 +7,7 @@ class CryptographicLibrary extends Library
     protected string $algorithm;
     protected int $minKeyLength;
     protected int $maxKeyLength;
-    public function __construct(string $name, string|array $versions, string $author, string $license, string $language, string $registry, string $algorithm, int $minKeyLength, int $maxKeyLength)
+    public function __construct(string $name = "unknown", string|array $versions = "0.0.0", string $author = "unknown", string $license = "unknown", string $language = "unknown", string $registry = 'http://localhost', string $algorithm = 'unknown', int $minKeyLength = 1, int $maxKeyLength = 128)
     {
         parent::__construct($name, $versions, $author, $license, $language, $registry);
         $this->algorithm = $algorithm;

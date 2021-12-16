@@ -32,7 +32,6 @@ function isSupportedClass($classname)
     } catch (Exception $e) {
         return false;
     }
-
     return $classname === "Software" || $class->isSubclassOf('Software');
 }
 

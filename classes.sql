@@ -70,4 +70,12 @@ VALUES (
         'Game Application',
         3,
         2
+    ),
+    (
+        8,
+        'IDEApplication',
+        '/static/images/code_black_24dp.svg',
+        'IDE Application',
+        3,
+        2
     );
