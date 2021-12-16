@@ -65,7 +65,8 @@ class Library extends Software
     }
     public function __toString(): string
     {
-        return parent::__toString() . " is a library for " . $this->language . " hosted on " . $this->registry;
+        $usesSemVer = ($this->isSemVer) ? "uses" : "does not use";
+        return str_replace("]", ", for $this->language, using $this->registry registry, $usesSemVer semantic versioning]", parent::__toString());
     }
     const SUPPORTED_LANGUAGES = array(
         "FoxPro",

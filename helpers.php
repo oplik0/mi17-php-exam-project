@@ -41,3 +41,33 @@ function require_software_classess()
         require_once($filename);
     }
 }
+function mapToSQL($value, string $key): string
+{
+    switch (gettype($value)) {
+        case 'string':
+            return "`$key` varchar(255)";
+        case 'integer':
+            return "`$key` int";
+        case 'boolean':
+            return "`$key` bit(1)";
+        case 'array':
+            return "`$key` text";
+        case 'double':
+            return "`$key` double";
+        default:
+            // default is *some* attempt at foreign key
+            return "`$key` int unsigned";
+    }
+}
+
+function sqlTypes($x)
+{
+    switch (gettype($x)) {
+        case 'integer':
+            return 'i';
+        case 'double':
+            return 'd';
+        default;
+            return 's';
+    }
+}

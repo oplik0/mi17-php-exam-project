@@ -13,5 +13,10 @@ function connectToDatabase(): mysqli
         http_response_code(500);
         throw new Exception("Could not connect to database!");
     }
+    if (!file_exists(__DIR__ . "/.db_prepared")) {
+        $query = file_get_contents(__DIR__ . "/classes.sql");
+        $db->multi_query($query);
+        touch(__DIR__ . "/.db_prepared");
+    }
     return $db;
 }

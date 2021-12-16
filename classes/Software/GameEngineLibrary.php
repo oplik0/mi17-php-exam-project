@@ -54,4 +54,9 @@ class GameEngineLibrary extends Library
     {
         return $this->usesOSIApprovedLicense() && !$this->revenueShare;
     }
+    public function __toString(): string
+    {
+        $revenueShare = ($this->revenueShare) ? "requires revenue share" : "does not require revenue share";
+        return str_replace("]", ", supports $this->Dimensions, $revenueShare]", parent::__toString());
+    }
 }

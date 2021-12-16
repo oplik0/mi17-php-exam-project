@@ -56,6 +56,6 @@ class CryptographicLibrary extends Library
     }
     public function __toString(): string
     {
-        return parent::__toString() . $this->algorithm . " " . $this->minKeyLength . " " . $this->maxKeyLength;
+        return str_replace("]", ", uses $this->algorithm, supports keys between $this->minKeyLength and $this->maxKeyLength in length]", parent::__toString());
     }
 }

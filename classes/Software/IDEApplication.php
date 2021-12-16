@@ -39,4 +39,10 @@ class IDEApplication extends Application
         $lookupStatement->execute();
         return array_map(fn ($values) => new GameEngineLibrary($values['name'], $values['versions'], $values['author'], $values['license'], $values['language'], $values['registry'], new Dimensions($values['width'], $values['height'], $values['depth']), $values['revenueShare']), $lookupStatement->get_result()->fetch_all(MYSQLI_ASSOC));
     }
+    public function __toString(): string
+    {
+        $addonSupport = $this->supportsAddons ? "supports addons" : "does not support addons";
+        $languages = implode(', ', $this->getLanguages());
+        return str_replace("]", ", for $languages, $addonSupport]", parent::__toString());
+    }
 }

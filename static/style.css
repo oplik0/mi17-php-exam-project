@@ -25,7 +25,7 @@ body {
 .classCard__info {
     display: flex;
     flex-direction: column;
-    min-width: 10vw;
+    min-width: 5vw;
     max-width: 50vw;
     justify-content: center;
     align-content: center;
@@ -54,4 +54,35 @@ th {
 .uploadForm {
     display: flex;
     flex-direction: column;
+}
+
+.level2 {
+    transform: scale(0.9);
+}
+.level3 {
+    transform: scale(0.8);
+}
+.level4 {
+    transform: scale(0.7);
+}
+.level5 {
+    transform: scale(0.6);
+}
+.level6 {
+    transform: scale(0.5);
+}
+.level7 {
+    transform: scale(0.45);
+}
+.level8 {
+    transform: scale(0.4);
+}
+.level9 {
+    transform: scale(0.35);
+}
+.level10 {
+    transform: scale(0.3);
+}
+.level11 {
+    transform: scale(0.25);
 }

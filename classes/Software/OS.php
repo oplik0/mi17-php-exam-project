@@ -50,7 +50,7 @@ class OS extends Software
     }
     public function __toString(): string
     {
-        return parent::__toString() . " is an OS distributionOf of " . $this->distributionOf . "using " . $this->kernelName . " version " . $this->kernelVersion . " kernel";
+        return str_replace("]", ", Architecture: $this->architecture, Distribution of: $this->distributionOf, kernel version: $this->kernelVersion, kernel name: $this->kernelName]", parent::__toString());
     }
 
     const ARCHITECTURES = array(

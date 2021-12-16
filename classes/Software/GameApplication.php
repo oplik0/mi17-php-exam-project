@@ -34,4 +34,8 @@ class GameApplication extends Application
     {
         $this->gameEngine = new GameEngineLibrary($name, $versions, $author, $license, $language, $registry, $dimensions, $revenueShare);
     }
+    public function __toString(): string
+    {
+        return str_replace("]", ", in $this->genre genre, using $this->gameEngine]", parent::__toString());
+    }
 }

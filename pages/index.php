@@ -1,4 +1,7 @@
     <?php
+
+    use MyCLabs\Enum\Enum;
+
     require_once(__DIR__ . "/../db.php");
     require_once(__DIR__ . '/../classes/ClassDisplay.php');
 
@@ -53,27 +56,33 @@
             {
                 $classReflection = new ReflectionClass($className);
                 $classProperties = $classReflection->getConstructor()->getParameters();
+                $constructionParams = array();
                 foreach ($classProperties as $property) {
                     if (isset($_POST[$property->name])) {
                         $propertyType = $property->getType();
                         if (in_array((string)$propertyType, array('int', 'string'))) {
-                            $classProperties[$property->name] = $_POST[$property->name];
+                            $constructionParams[$property->name] = $_POST[$property->name];
                         } else if (in_array((string)$propertyType, array('string|array', 'array'))) {
-                            $classProperties[$property->name] = explode(', ', $_POST[$property->name]);
+                            $constructionParams[$property->name] = explode(', ', $_POST[$property->name]);
                         } else {
                             try {
                                 $typeClass = new ReflectionClass((string)$propertyType);
                                 if ($typeClass->isSubclassOf('Software')) {
-                                    $classProperties[$property->name] = formToClass((string)$propertyType);
+                                    $constructionParams[$property->name] = formToClass((string)$propertyType);
                                 }
                             } catch (Exception $e) {
                             }
                         }
                     }
                 }
-                $newObject = $classReflection->newInstanceArgs($classProperties);
+                $newObject = $classReflection->newInstanceArgs($constructionParams);
                 return $newObject;
+            }
+            $class = formToClass($_POST["className"]);
+            if ($class->serializeToSQL($db)) {
+                echo "<script>alert('Obiekt " . $class . " został zapisany');</script>";
             }
         }
     }
+    $db->close();
     ?>

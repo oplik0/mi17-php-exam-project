@@ -6,6 +6,8 @@
  * @version 0.1
  * @package php-exam
  */
+
+require_once(__DIR__ . "/../../helpers.php");
 class Software
 {
     protected string $name;
@@ -85,47 +87,37 @@ class Software
     }
     public function __toString()
     {
-        return $this->name . ' ' . $this->getLatestVersion() . ' by ' . $this->author . ' (licensed under ' . $this->license . ')';
+        $clasName = get_class($this);
+        $versions = implode(', ', $this->versions);
+        $OSIApproved = ($this->OSIApproved) ? 'Yes' : 'No';
+        return "$clasName $this->name: [Versions: $versions, Author: $this->author, License: $this->license, uses OSI approved license: $OSIApproved]";
     }
-    protected function mapToSQL($value, string $key): string
+    public function createSQLTable(mysqli $connection): mysqli_result|bool
     {
-        switch (gettype($value)) {
-            case 'string':
-                return "`$key` varchar(255),";
-            case 'integer':
-                return "`$key` int,";
-            case 'boolean':
-                return "`$key` bit(1),";
-            case 'array':
-                return "`$key` text,";
-            case 'double':
-                return "`$key` double,";
-            default:
-                // default is *some* attempt at foreign key
-                return "`$key` int unsigned,";
-        }
-    }
-    public function createSQLTable(string $tableName, mysqli $connection): mysqli_result|bool
-    {
+        $name = get_class($this) . "_objects";
         $vars = get_object_vars($this);
-        $variables = implode('\n', array_map($this->mapToSQL, $vars, array_keys($vars)));
-        $sql = "CREATE TABLE IF NOT EXISTS $tableName (
+        $variables = implode(', ', array_map('mapToSQL', $vars, array_keys($vars)));
+        $sql = "CREATE TABLE IF NOT EXISTS $name (
             `id` int unsigned NOT NULL AUTO_INCREMENT,
-            $variables
+            $variables,
+            PRIMARY KEY (`id`)
         )";
         return $connection->query($sql);
     }
-    public function serializeToSQL(string $tableName, mysqli $connection): mysqli_result|bool
+    public function serializeToSQL(mysqli $connection): bool
     {
+        $name = get_class($this) . "_objects";
+        $this->createSQLTable($connection);
         $vars = get_object_vars($this);
         $variables = implode(', ', array_keys($vars));
-        $values = implode(', ', $vars);
-        $sql = "INSERT INTO $tableName (
+        $sqlTypes = implode('', array_map('getTypes', $vars));
+        $values = implode(', ', array_map(fn ($x) => gettype($x) == 'array' ? "'" . implode(',', $x) . "'" : $x, $vars));
+        echo $variables . '   values: ' . $values;
+        $statement = $connection->prepare("INSERT INTO $name (
             $variables
-        ) VALUES (
-            $values
-        )";
-        return $connection->query($sql);
+        ) VALUES (?)");
+        $statement->bind_param($sqlTypes, $values);
+        return $statement->execute();
     }
 
     const OSIAPPROVEDLICENSES = array(

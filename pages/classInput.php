@@ -47,7 +47,7 @@ function createInputs(ReflectionClass $classReflection): void
 
 ?>
 <h1>Create new <?= $className ?></h1>
-<form action="index.php" method="post">
+<form action="/index.php" method="post">
     <input type="hidden" name="className" value="<?= $className ?>">
     <?php createInputs($classReflection); ?>
     <input type="submit" name="createClass" value="Create">

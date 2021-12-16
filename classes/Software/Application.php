@@ -47,8 +47,9 @@ class Application extends Software
     {
         $this->os = $os;
     }
-    public function __toString()
+    public function __toString(): string
     {
-        return parent::__toString() . " " . $this->icon . " " . $this->os . " " . $this->permissions;
+        $perms = implode(", ", $this->permissions);
+        return str_replace("]", ", for $this->os os, icon: $this->icon, requires $perms permissions]", parent::__toString());
     }
 }
